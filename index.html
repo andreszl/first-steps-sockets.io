@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title> Sockets IO </title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	<h1> Comunicacion bidirecional Con Sockets.IO </h1>
+
+	<p id="hellow"></p>
+	<p>
+			
+		Numero de conexiones activas : <b id="connections"></b>
+
+	</p>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		(function(io){
+			'use strict'
+			var io = io(),
+				d = document
+			io.on('hellow', function(data){
+				console.log(data)
+				d.querySelector('#hellow').innerHTML = data.message
+				
+				io.emit('event', { event: "event"})
+			})
+			io.on('connect users', function(data){
+				console.log('Actualizando desde el servidor. ' + data.numbers + '  Connected Users')
+				d.querySelector('#connections').innerHTML = data.numbers 
+			})
+			
+		})(io)
+
+	</script>
+
+</body>
+</html>
